@@ -11,6 +11,7 @@ JSON_MENU_PATH = './data/weekly_menu.json'
 DB_PATH = './data/recipes.db'
 
 meal_types = ['breakfast', 'lunch', 'dinner']
+meal_types_ru = ['Завтрак', 'Обед', 'Ужин']
 
 """
 Another option to share variables across multiple Python files within the same
