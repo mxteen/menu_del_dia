@@ -119,7 +119,7 @@ def write_menu_to_json(menu, path='weekly_menu.json'):
     with open(path, 'w') as file:
         json.dump(menu, file, indent=4)
 
-MAKE_LIST_OF_PRODUCTS = """
+MAKE_SHOPPING_LIST = """
 SELECT 
     i.ingredient_name, 
     SUM(ri.ingredient_qty) * ? AS total_qty, 
@@ -137,7 +137,7 @@ ORDER BY
     i.ingredient_name
 """
 
-def make_list_of_products(recipe_ids: list) -> str:
+def make_shopping_list(recipe_ids: list) -> str:
     """
     Uses MAKE_LIST_OF_PRODUCTS query and returns multiple line string 
     of ingredients with their quantities. Makes a list of products to buy.
@@ -150,7 +150,7 @@ def make_list_of_products(recipe_ids: list) -> str:
              measurements
     """
     condition = "ri.recipe_id IN {}".format(lst_to_str(recipe_ids))
-    query = MAKE_LIST_OF_PRODUCTS.format(condition)
+    query = MAKE_SHOPPING_LIST.format(condition)
 
     # Execute the SQL query to retrieve data
     data = cursor.execute(query, (N_PERSONS,)).fetchall()
@@ -197,7 +197,7 @@ def make_list_of_dishes(recipe_ids: list) -> str:
 
 
 # Initialize SQLite database connection
-# TODO: развести процессы формирования menu и отправки сообщений в telegram
+# TODO: развести процессы формирования menu и отправки сообщений в telegram. Сделать weekly_message_sender.py
 with sqlite3.connect(DB_PATH) as connection:
     cursor = connection.cursor()
     print('Generating menu...')  #TODO: писать в логи
@@ -205,24 +205,24 @@ with sqlite3.connect(DB_PATH) as connection:
     print('Menu generation complete') #TODO: писать в логи
 
     print('Generating message with dishes list...') #TODO: писать в логи
-    message_with_recipe_names = ''
+    msg_recipe_names = ''
     for meal_type, meal_type_ru in zip(meal_types, meal_types_ru):
-        message_with_recipe_names += meal_type_ru.upper() + '\n'
-        message_with_recipe_names += make_list_of_dishes(menu[meal_type]) + '\n'
+        msg_recipe_names += meal_type_ru.upper() + '\n'
+        msg_recipe_names += make_list_of_dishes(menu[meal_type]) + '\n'
     print('Message generation complete') #TODO: писать в логи
 
     print('Generating message with buying list...') #TODO: писать в логи
     recipe_ids = []
     for meal_type in meal_types:
         recipe_ids += menu[meal_type]
-    message_with_buying_list = make_list_of_products(recipe_ids) + '\n'
+    msg_shopping_list = make_shopping_list(recipe_ids) + '\n'
     print('Message generation complete') #TODO: писать в логи
 
 print('Sending messages...') #TODO: писать в логи
 print('\nСписок блюд')
-print(message_with_recipe_names) # TODO: send to telegram
+print(msg_recipe_names) # TODO: send to telegram
 print('Список покупок')
-print(message_with_buying_list) # TODO: send to telegram
+print(msg_shopping_list) # TODO: send to telegram
 print('Writing recipe IDs to temporary json-file')
 write_menu_to_json(menu, path=JSON_MENU_PATH)
 print()
