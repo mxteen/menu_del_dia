@@ -1,3 +1,5 @@
+import json
+
 def lst_to_str(lst: list) -> str:
     """
     Convert a list of elements to a string representation.
@@ -24,3 +26,9 @@ def lst_to_str(lst: list) -> str:
           representations using the str() function.
     """
     return '(' + ', '.join(map(str, lst)) + ')'
+
+def read_menu(path):
+    # Read menu from JSON file
+    with open(path, 'r') as file:
+        menu = json.load(file)
+    return menu
