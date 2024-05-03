@@ -1,9 +1,6 @@
-import os
 import sqlite3
-from datetime import datetime, timedelta
-import json
 from helpers import lst_to_str, read_menu
-from config import JSON_MENU_PATH, DB_PATH, N_DAYS, N_PERSONS
+from config import JSON_MENU_PATH, DB_PATH, N_PERSONS
 from config import meal_types, meal_types_ru
 
 MAKE_SHOPPING_LIST = """

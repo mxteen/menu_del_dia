@@ -1,5 +1,5 @@
 import unittest
-from scripts.menu_generator import generate_weekly_menu, write_menu_to_json
+from scripts.menu_generator import generate_weekly_menu
 
 class TestMenuGenerator(unittest.TestCase):
 
