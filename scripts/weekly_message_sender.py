@@ -1,7 +1,12 @@
 import sqlite3
-from helpers import lst_to_str, read_menu
+import logging
+from helpers import lst_to_str, read_menu, send_message
 from config import JSON_MENU_PATH, DB_PATH, N_PERSONS
 from config import meal_types, meal_types_ru
+
+# Set up logging with append mode
+logging.basicConfig(filename='./logs/menu_del_dia.log', level=logging.INFO,
+                    filemode='a')
 
 MAKE_SHOPPING_LIST = """
 SELECT 
@@ -83,22 +88,21 @@ menu = read_menu(JSON_MENU_PATH)
 # Initialize SQLite database connection
 with sqlite3.connect(DB_PATH) as connection:
     cursor = connection.cursor()
-    print('Generating message with dishes list...') #TODO: писать в логи
+    logging.info('Generating message with dishes list...')
     msg_recipe_names = ''
     for meal_type, meal_type_ru in zip(meal_types, meal_types_ru):
         msg_recipe_names += meal_type_ru.upper() + '\n'
         msg_recipe_names += make_list_of_dishes(menu[meal_type]) + '\n'
-    print('Message generation complete') #TODO: писать в логи
+    logging.info('Message generation complete')
 
-    print('Generating message with buying list...') #TODO: писать в логи
+    logging.info('Generating message with shopping list...')
     recipe_ids = []
     for meal_type in meal_types:
         recipe_ids += menu[meal_type]
     msg_shopping_list = make_shopping_list(recipe_ids) + '\n'
-    print('Message generation complete') #TODO: писать в логи
+    logging.info('Message generation complete')
 
-    print('Sending messages...') #TODO: писать в логи
-    print('\nСписок блюд')
-    print(msg_recipe_names) # TODO: send to telegram
-    print('Список покупок')
-    print(msg_shopping_list) # TODO: send to telegram
+logging.info('Sending messages...')
+send_message('Список блюд:\n' + msg_recipe_names)
+send_message('Список покупок:\n' + msg_shopping_list)
+logging.info('Messages sent to Telegram.')

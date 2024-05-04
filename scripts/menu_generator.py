@@ -2,8 +2,14 @@ import os
 import sqlite3
 from datetime import datetime, timedelta
 import json
+import logging
 from helpers import lst_to_str
 from config import JSON_MENU_PATH, DB_PATH, N_DAYS, meal_types
+
+
+# Set up logging with append mode
+logging.basicConfig(filename='./logs/menu_del_dia.log', level=logging.INFO,
+                    filemode='a')
 
 # Define SQLite query
 GET_RANDOM_RECIPES = """
@@ -35,7 +41,7 @@ def generate_weekly_menu():
 
     Example usage:
         menu = generate_weekly_menu()
-        print(menu)
+        logging.info(menu)
     """
     menu = dict()
     recipe_ids = list()
@@ -107,14 +113,15 @@ def is_weekly_menu_up_to_date():
         current_date = datetime.now().date()
         return (current_date - last_modified_date) <= timedelta(days=7)
 
+logging.info(f'Date: {datetime.now().date()}')
 if not is_weekly_menu_up_to_date():
     # Initialize SQLite database connection
     with sqlite3.connect(DB_PATH) as connection:
         cursor = connection.cursor()
-        print('Generating menu...')  #TODO: писать в логи
+        logging.info('Generating menu...')
         menu = generate_weekly_menu()
-        print('Menu generation complete') #TODO: писать в логи
-    print('Writing recipe IDs to temporary json-file')
+        logging.info('Menu generation complete')
+    logging.info('Writing recipe IDs to temporary json-file')
     write_menu_to_json(menu, path=JSON_MENU_PATH)
 else:
-    print('The menu is up to date')
+    logging.info('The menu is up to date')
