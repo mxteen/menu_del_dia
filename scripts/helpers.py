@@ -1,4 +1,5 @@
 import json
+import requests
 
 def lst_to_str(lst: list) -> str:
     """
@@ -32,3 +33,20 @@ def read_menu(path):
     with open(path, 'r') as file:
         menu = json.load(file)
     return menu
+
+# TODO: Use invironment variables ang Github Actions instead of secrets.txt
+with open ('secrets.txt') as f:
+    secrets = f.readlines()
+# Initializing the bot with the bot token
+token = secrets[0].strip()
+chat_id = secrets[1].strip()
+
+# TODO: Use python-telegram-bot or aiogram
+# Send messages to Telegram
+telegram_api_url = f"https://api.telegram.org/bot{token}/sendMessage"
+
+def send_message(text):
+    params = {"chat_id": chat_id, "text": text}
+    response = requests.post(telegram_api_url, params=params)
+    if response.status_code != 200:
+        print(f"Failed to send message: {response.text}")
