@@ -1,3 +1,12 @@
+# credentials
+secrets.txt
+
+# database related files
+recepies_websites.txt
+*.csv
+*.xlsx
+*.sqlite
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
