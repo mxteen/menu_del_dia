@@ -1,5 +1,6 @@
 import json
 import requests
+from config import SECRETS_PATH
 
 def lst_to_str(lst: list) -> str:
     """
@@ -35,7 +36,7 @@ def read_menu(path):
     return menu
 
 # TODO: Use invironment variables ang Github Actions instead of secrets.txt
-with open ('secrets.txt') as f:
+with open (SECRETS_PATH) as f:
     secrets = f.readlines()
 # Initializing the bot with the bot token
 token = secrets[0].strip()

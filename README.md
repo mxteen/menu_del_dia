@@ -33,6 +33,13 @@ This project is a service for creating a daily meal plan. The main idea is to he
   - A Google form for constructive criticism with a predefined structure.
   - The bot or email.
 
+### CRON jobs
+```
+0 10 * * 0 /path/to/python /path/to/menu_generator.py
+1 10 * * 0 /path/to/python /path/to/weekly_message_sender.py
+0 18 * * * /path/to/python /path/to/daily_message_sender.py
+```
+
 ## Motivation (Manifesto)
 
 1. This project solves my problem and is aimed at satisfying my needs for meal planning.

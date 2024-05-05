@@ -1,11 +1,11 @@
 import sqlite3
 import logging
 from helpers import lst_to_str, read_menu, send_message
-from config import JSON_MENU_PATH, DB_PATH, N_PERSONS
+from config import JSON_MENU_PATH, DB_PATH, N_PERSONS, LOG_PATH
 from config import meal_types, meal_types_ru
 
 # Set up logging with append mode
-logging.basicConfig(filename='./logs/menu_del_dia.log', level=logging.INFO,
+logging.basicConfig(filename=LOG_PATH, level=logging.INFO,
                     filemode='a')
 
 MAKE_SHOPPING_LIST = """

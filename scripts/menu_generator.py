@@ -4,11 +4,11 @@ from datetime import datetime, timedelta
 import json
 import logging
 from helpers import lst_to_str
-from config import JSON_MENU_PATH, DB_PATH, N_DAYS, meal_types
+from config import JSON_MENU_PATH, DB_PATH, N_DAYS, LOG_PATH, meal_types
 
 
 # Set up logging with append mode
-logging.basicConfig(filename='./logs/menu_del_dia.log', level=logging.INFO,
+logging.basicConfig(filename=LOG_PATH, level=logging.INFO,
                     filemode='a')
 
 # Define SQLite query
@@ -76,14 +76,13 @@ def generate_weekly_menu():
 
 
 # Function to write menu to JSON file
-def write_menu_to_json(menu, path='weekly_menu.json'):
+def write_menu_to_json(menu, path):
     """
     Write the menu dictionary to a JSON file.
 
     Args:
         menu (dict): A dictionary containing the menu data.
-        path (str): Optional. The path to the JSON file. Default is 
-                    'weekly_menu.json'.
+        path (str): Optional. The path to the JSON file.
 
     Example usage:
         write_menu_to_json(menu, 'menu.json')
@@ -97,9 +96,9 @@ def is_weekly_menu_up_to_date():
     Check if the weekly menu file exists and is up to date.
 
     This function checks if the weekly menu file exists at the specified path
-    (JSON_MENU_PATH) and if it was modified within the last 7 days. If the file
-    does not exist or if it is older than 7 days, the function returns False,
-    indicating that the menu is not up to date. Otherwise, it returns True.
+    and if it was modified within the last 7 days. If the file does not exist
+    or if it is older than 7 days, the function returns False, indicating that
+    the menu is not up to date. Otherwise, it returns True.
 
     Returns:
         bool: True if the weekly menu file exists and was modified within the
@@ -122,6 +121,6 @@ if not is_weekly_menu_up_to_date():
         menu = generate_weekly_menu()
         logging.info('Menu generation complete')
     logging.info('Writing recipe IDs to temporary json-file')
-    write_menu_to_json(menu, path=JSON_MENU_PATH)
+    write_menu_to_json(menu=menu, path=JSON_MENU_PATH)
 else:
     logging.info('The menu is up to date')

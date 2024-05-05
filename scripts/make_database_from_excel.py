@@ -1,8 +1,6 @@
 import sqlite3
 import pandas as pd
-
-PATH_XLSX = './data/recipes.xlsx'
-PATH_DB = './data/recipes.db'
+from config import PATH_XLSX, PATH_DB
 
 df_recipes = pd.read_excel(PATH_XLSX, sheet_name='recipe')
 df_food_category = pd.read_excel(PATH_XLSX, sheet_name='food_category')
