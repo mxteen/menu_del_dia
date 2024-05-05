@@ -10,6 +10,19 @@ JSON_MENU_PATH = './data/weekly_menu.json'
 # Path to the database
 DB_PATH = './data/recipes.db'
 
+# Path to secrets.txt # TODO: Use secrets and environment variables instead
+SECRETS_PATH = './secrets.txt'
+
+# Path to log-file
+LOG_PATH = './logs/menu_del_dia.log'
+
+# Path to excel-file containing recipes
+PATH_XLSX = './data/recipes.xlsx'
+
+# Path to sqlite database containing recipes
+PATH_DB = './data/recipes.db'
+
+
 meal_types = ['breakfast', 'lunch', 'dinner']
 meal_types_ru = ['Завтрак', 'Обед', 'Ужин']
 days_of_week = ['Понедельник', 'Вторник', 'Среда', 'Четверг',
