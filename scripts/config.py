@@ -17,10 +17,7 @@ SECRETS_PATH = './secrets.txt'
 LOG_PATH = './logs/menu_del_dia.log'
 
 # Path to excel-file containing recipes
-PATH_XLSX = './data/recipes.xlsx'
-
-# Path to sqlite database containing recipes
-PATH_DB = './data/recipes.db'
+XLSX_PATH = './data/recipes.xlsx'
 
 
 meal_types = ['breakfast', 'lunch', 'dinner']
