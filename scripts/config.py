@@ -22,6 +22,7 @@ XLSX_PATH = './data/recipes.xlsx'
 
 meal_types = ['breakfast', 'lunch', 'dinner']
 meal_types_ru = ['Завтрак', 'Обед', 'Ужин']
+meal_types_for_query_ru = ['Завтрак', 'Обед или ужин', 'Обед или ужин']
 days_of_week = ['Понедельник', 'Вторник', 'Среда', 'Четверг',
                 'Пятница', 'Суббота', 'Воскресенье']
 
