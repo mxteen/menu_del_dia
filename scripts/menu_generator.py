@@ -4,21 +4,13 @@ from datetime import datetime, timedelta
 import json
 import logging
 from helpers import lst_to_str
-from config import JSON_MENU_PATH, DB_PATH, N_DAYS, LOG_PATH, meal_types
+from config import JSON_MENU_PATH, DB_PATH, N_DAYS, LOG_PATH
+from config import meal_types, meal_types_for_query_ru
 
 
 # Set up logging with append mode
 logging.basicConfig(filename=LOG_PATH, level=logging.INFO,
                     filemode='a')
-
-# Define SQLite query
-GET_RANDOM_RECIPES = """
-SELECT r.recipe_id
-FROM recipe r
-JOIN meal_type m ON r.meal_type_id = m.meal_type_id
-WHERE {}
-ORDER BY RANDOM() LIMIT ?
-"""
 
 def generate_weekly_menu():
     """
@@ -45,20 +37,25 @@ def generate_weekly_menu():
     """
     menu = dict()
     recipe_ids = list()
-    # Meal types and corresponding conditions
-    where_conditions = [
-        "m.meal_type_name = 'Завтрак'",
-        "m.meal_type_name = 'Обед или ужин'",
-        "m.meal_type_name = 'Обед или ужин'" +\
-              f"AND r.recipe_id NOT IN {lst_to_str(recipe_ids)}"
-    ]
 
-    for meal_type, condition in zip(meal_types, where_conditions):
+    for meal_type, meal_type_ru in zip(meal_types, meal_types_for_query_ru):
+        # Construct a comma-separated string of recipe IDs
+        ids_list = lst_to_str(recipe_ids)
+
+        # Define SQLite query with additional parameters
+        query = f"""
+        SELECT r.recipe_id
+        FROM recipe r
+        JOIN meal_type m ON r.meal_type_id = m.meal_type_id
+        WHERE m.meal_type_name = ? AND r.recipe_id NOT IN {ids_list}
+        ORDER BY RANDOM() LIMIT ?
+        """
+        args = (meal_type_ru, N_DAYS)  # additional arguments for the query
+
         # Execute SQL query to fetch random recipe IDs
-        query = GET_RANDOM_RECIPES.format(condition)
+        cursor.execute(query, args)
         # Fetch recipe_ids and extract IDs from tuples
-        recipe_ids = [
-            id[0] for id in cursor.execute(query, (N_DAYS,)).fetchall()]
+        recipe_ids = [id[0] for id in cursor.fetchall()]
         # Store the selected recipe IDs for the current meal type
         menu[meal_type] = recipe_ids
 

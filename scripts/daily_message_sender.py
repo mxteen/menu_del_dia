@@ -92,3 +92,5 @@ logging.info('Generation of messages with the recipes for the day {current_day_n
 logging.info('Sending messages...')
 for msg in messages: send_message(msg)
 logging.info(f'Messages with the recipes for the day {current_day_number} sent to Telegram.')
+# Temporary
+send_message('Если нашли ошибку, заполните форму: https://forms.gle/2vhoA8fxj3mEktXa7. Для регистрации каждой ошибки заполните, пожалуйста, эту форму отдельно.')  # Temporary
