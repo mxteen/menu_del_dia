@@ -9,33 +9,33 @@ logging.basicConfig(filename=LOG_PATH, level=logging.INFO,
                     filemode='a')
 
 MAKE_SHOPPING_LIST = """
-SELECT 
-    i.ingredient_name, 
-    SUM(ri.ingredient_qty) * ? AS total_qty, 
-    m.measurement_name 
-FROM 
+SELECT
+    i.ingredient_name,
+    SUM(ri.ingredient_qty) * ? AS total_qty,
+    m.measurement_name
+FROM
     recipe_ingredients ri
-JOIN 
+JOIN
     ingredients i ON ri.ingredient_id = i.ingredient_id
-JOIN 
+JOIN
     measurements m ON ri.measurement_id = m.measurement_id
 WHERE {}
-GROUP BY 
+GROUP BY
     ri.ingredient_id, m.measurement_name
-ORDER BY 
+ORDER BY
     i.ingredient_name
 """
 
-def make_shopping_list(recipe_ids: list) -> str:
+def make_shopping_list(recipe_ids: list[int] | tuple[int]) -> str:
     """
-    Uses MAKE_LIST_OF_PRODUCTS query and returns multiple line string 
+    Uses MAKE_LIST_OF_PRODUCTS query and returns multiple line string
     of ingredients with their quantities. Makes a list of products to buy.
 
     Args:
-        recipe_ids (list): list of recipe IDs
+        recipe_ids (list | tuple): list of recipe IDs
 
     Returns:
-        str: multiple line string with ingredients and their quantities and 
+        str: multiple line string with ingredients and their quantities and
              measurements
     """
     condition = "ri.recipe_id IN {}".format(lst_to_str(recipe_ids))
@@ -59,9 +59,9 @@ WHERE {}
 ORDER BY recipe_name
 """
 
-def make_list_of_dishes(recipe_ids: list) -> str:
+def make_list_of_dishes(recipe_ids: list[int] | tuple[int]) -> str:
     """
-     Uses MAKE_LIST_OF_DISHES query and returns multiple line string 
+     Uses MAKE_LIST_OF_DISHES query and returns multiple line string
     of ingredients with their quantities.  Makes a list of dishes for a week
 
    Args:
@@ -105,4 +105,5 @@ with sqlite3.connect(DB_PATH) as connection:
 logging.info('Sending messages...')
 send_message('Список блюд:\n' + msg_recipe_names)
 send_message('Список покупок:\n' + msg_shopping_list)
+send_message('Если хотите предложить рецепт, заполните форму: https://forms.gle/AqH8DbpGAYstG1vg8')
 logging.info('Messages sent to Telegram.')

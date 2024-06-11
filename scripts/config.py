@@ -1,30 +1,31 @@
 # Number of days
-N_DAYS = 7 #TODO: Make it a variable and be able to be changed in UI
+N_DAYS: int = 7 #TODO: Make it a variable and be able to be changed in UI
 
 # Number of persons
-N_PERSONS = 4  # TODO: Make it a variable and be able to be changed in UI
+N_PERSONS: int = 4  # TODO: Make it a variable and be able to be changed in UI
 
 # Path to JSON file containing the recipe information
-JSON_MENU_PATH = './data/weekly_menu.json'
+JSON_MENU_PATH: str = './data/weekly_menu.json'
 
 # Path to the database
-DB_PATH = './data/recipes.db'
+DB_PATH: str = './data/recipes.db'
 
 # Path to secrets.txt # TODO: Use secrets and environment variables instead
-SECRETS_PATH = './secrets.txt'
+SECRETS_PATH: str = './secrets.txt'
 
 # Path to log-file
-LOG_PATH = './logs/menu_del_dia.log'
+LOG_PATH: str = './logs/menu_del_dia.log'
 
 # Path to excel-file containing recipes
-XLSX_PATH = './data/recipes.xlsx'
+XLSX_PATH: str = './data/recipes.xlsx'
 
 
-meal_types = ['breakfast', 'lunch', 'dinner']
-meal_types_ru = ['Завтрак', 'Обед', 'Ужин']
-meal_types_for_query_ru = ['Завтрак', 'Обед или ужин', 'Обед или ужин']
-days_of_week = ['Понедельник', 'Вторник', 'Среда', 'Четверг',
-                'Пятница', 'Суббота', 'Воскресенье']
+meal_types: list | tuple = ['breakfast', 'lunch', 'dinner']
+meal_types_ru: list | tuple = ['Завтрак', 'Обед', 'Ужин']
+meal_types_for_query_ru: list | tuple = ['Завтрак', 'Обед или ужин', 'Обед или ужин']
+days_of_week: list | tuple = [
+    'Понедельник', 'Вторник', 'Среда', 'Четверг',
+    'Пятница', 'Суббота', 'Воскресенье']
 
 """
 Another option to share variables across multiple Python files within the same

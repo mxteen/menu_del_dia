@@ -12,7 +12,7 @@ from config import meal_types, meal_types_for_query_ru
 logging.basicConfig(filename=LOG_PATH, level=logging.INFO,
                     filemode='a')
 
-def generate_weekly_menu():
+def generate_weekly_menu() -> dict:
     """
     Generate a weekly menu by selecting random recipes for each meal type.
 
@@ -73,7 +73,7 @@ def generate_weekly_menu():
 
 
 # Function to write menu to JSON file
-def write_menu_to_json(menu, path):
+def write_menu_to_json(menu: dict, path: str) -> None:
     """
     Write the menu dictionary to a JSON file.
 
@@ -88,7 +88,7 @@ def write_menu_to_json(menu, path):
         json.dump(menu, file, indent=4)
 
 # Check if weekly menu file exists and is up to date
-def is_weekly_menu_up_to_date():
+def is_weekly_menu_up_to_date() -> bool:
     """
     Check if the weekly menu file exists and is up to date.
 
