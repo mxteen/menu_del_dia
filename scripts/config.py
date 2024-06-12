@@ -10,9 +10,6 @@ JSON_MENU_PATH: str = './data/weekly_menu.json'
 # Path to the database
 DB_PATH: str = './data/recipes.db'
 
-# Path to secrets.txt # TODO: Use secrets and environment variables instead
-SECRETS_PATH: str = './secrets.txt'
-
 # Path to log-file
 LOG_PATH: str = './logs/menu_del_dia.log'
 
@@ -22,7 +19,8 @@ XLSX_PATH: str = './data/recipes.xlsx'
 
 meal_types: list | tuple = ['breakfast', 'lunch', 'dinner']
 meal_types_ru: list | tuple = ['Завтрак', 'Обед', 'Ужин']
-meal_types_for_query_ru: list | tuple = ['Завтрак', 'Обед или ужин', 'Обед или ужин']
+meal_types_for_query_ru: list | tuple = [
+    'Завтрак', 'Обед или ужин', 'Обед или ужин']
 days_of_week: list | tuple = [
     'Понедельник', 'Вторник', 'Среда', 'Четверг',
     'Пятница', 'Суббота', 'Воскресенье']

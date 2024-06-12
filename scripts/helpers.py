@@ -1,6 +1,13 @@
+import os
 import json
 import requests
-from config import SECRETS_PATH
+import dotenv
+
+# Load environment variables from a .env file
+dotenv.load_dotenv()
+
+token = os.getenv('BOT_TOKEN')
+chat_id = os.getenv('CHAT_ID')
 
 def lst_to_str(lst: list) -> str:
     """
@@ -35,14 +42,8 @@ def read_menu(path: str):
         menu = json.load(file)
     return menu
 
-# TODO: Use invironment variables ang Github Actions instead of secrets.txt
-with open (SECRETS_PATH) as f:
-    secrets = f.readlines()
-# Initializing the bot with the bot token
-token = secrets[0].strip()
-chat_id = secrets[1].strip()
 
-# TODO: Use python-telegram-bot or aiogram
+# TODO: Use aiogram
 # Send messages to Telegram
 telegram_api_url = f"https://api.telegram.org/bot{token}/sendMessage"
 
